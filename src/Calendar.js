@@ -60,7 +60,7 @@ class Calendar extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        const {range, offset, date} = nextProps;
+        const {range, offset, date, shownDate} = nextProps;
         const oldRange = this.props.oldRange;
 
         if ((range && range['endDate'] && !range['endDate'].isSame(range['startDate'], "day")) || (oldRange && !oldRange["startDate"].isSame(range["startDate"]))) {
@@ -174,6 +174,7 @@ class Calendar extends Component {
 
         const shownDate = this.getShownDate();
         const {date, firstDayOfWeek} = this.state;
+
         const dateUnix = date.unix();
 
         const monthNumber = shownDate.month();
