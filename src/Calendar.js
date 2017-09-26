@@ -44,13 +44,12 @@ class Calendar extends Component {
         }
 
         const date = parseInput(props.date, format, 'startOf');
-        const state = {
+        this.state = {
             date,
             shownDate: (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
             firstDayOfWeek: (firstDayOfWeek || moment.localeData().firstDayOfWeek()),
         };
 
-        this.state = state;
         this.styles = getTheme(theme);
     }
 
@@ -63,20 +62,17 @@ class Calendar extends Component {
         const {range, offset, date, shownDate} = nextProps;
         const oldRange = this.props.oldRange;
 
-        if ((range && range['endDate'] && !range['endDate'].isSame(range['startDate'], "day")) || (oldRange && !oldRange["startDate"].isSame(range["startDate"]))) {
-            this.setState({
-                shownDate: (shownDate || range && range['endDate'] || date).clone().add(offset, 'months'),
-                date: parseInput(nextProps.date, this.props.format, 'startOf')
-            })
-        }
+        this.setState({
+            shownDate: parseInput(nextProps.date, this.props.format, 'startOf'),
+            date: parseInput(nextProps.date, this.props.format, 'startOf')
+        });
+
     }
 
     getShownDate() {
         const {link, offset} = this.props;
 
-        const shownDate = (link) ? link.clone().add(offset, 'months') : this.state.shownDate;
-
-        return shownDate;
+        return (link) ? link.clone().add(offset, 'months') : this.state.shownDate;
     }
 
     handleSelect(newDate) {
